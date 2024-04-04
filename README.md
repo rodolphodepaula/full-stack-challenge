@@ -37,6 +37,8 @@ Precisamos obter e exibir os seguintes dados:
 
 Por decisão técnica, temos a necessidade de guardar estas informações em um banco de dados. Para isso, fique livre para criar a estrutura necessária para guardar as informações que achar pertinente das faixas.
 
+- [Relacionamentos dos Modelos](MODEL_RELATIONSHIPS.md)
+
 Uma vez armazenados os dados, precisamos exibí-los através de uma webpage pública, ordenados por título da faixa de forma alfabética.
 
 
