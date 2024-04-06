@@ -1,12 +1,18 @@
 <?php
+namespace App\Services\Track;
 
-namespace App\Services;
-
+use App\Services\AbstractService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Http;
 
-class TrackService
+class TrackService extends AbstractService
 {
-    public function getBySearch(string $param): ?array
+    public function getBySearch(Builder $track, array $search = []): Builder
+    {
+        return $track;
+    }
+
+    public function getBySearchApi(string $param): ?array
     {
         if (empty($param)) {
             return null;

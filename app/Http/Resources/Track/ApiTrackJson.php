@@ -4,7 +4,7 @@ namespace App\Http\Resources\Track;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TrackJson extends JsonResource
+class ApiTrackJson extends JsonResource
 {
     public function toArray($request)
     {

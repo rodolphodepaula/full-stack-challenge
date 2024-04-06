@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\TrackService;
-use App\Http\Resources\Track\TrackCollection;
+use App\Services\Track\TrackService;
+use App\Http\Resources\Track\ApiTrackCollection;
 
 class TrackController extends Controller
 {
     public function __construct(protected TrackService $svcTrack)
     {}
 
-    public function index(string $isrc): TrackCollection
+    public function index(string $isrc): ApiTrackCollection
     {
-        $tracks = $this->svcTrack->getBySearch($isrc);
+        $tracks = $this->svcTrack->getBySearchApi($isrc);
 
-        return new TrackCollection(collect($tracks));
+        return new ApiTrackCollection(collect($tracks));
     }
 }
