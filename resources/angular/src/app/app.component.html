@@ -1,11 +1,16 @@
-<!-- Toolbar -->
-<div class="toolbar" role="banner">
-  <img width="180" alt="ONERpm Logo" src="assets/header-logo.png">
-</div>
+<header class="header">
+  <img src="assets/header-logo.png" alt="ONERpm Logo">
+  <nav>
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+    <a href="/dashboard" *ngIf="isAuthenticated">Dashboard</a>
+  </nav>
+</header>
 
-<div class="content" role="main">
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
 
-  <h1>Teste</h1>
-
-</div>
-<router-outlet></router-outlet>
+<footer class="footer">
+  <p>© 2024 ONERpm. All rights reserved.</p>
+</footer>

@@ -1,0 +1,44 @@
+.card-custom {
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  .card-title {
+    color: #333;
+  }
+
+  .btn-primary {
+    background-color: #272c31;
+    &:hover {
+      background-color: darken(#272c31, 10%);
+    }
+  }
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .content {
+    padding-top: 60px;
+    height: calc(100vh - 60px);
+    overflow-y: scroll;
+  }
+
+  .header-fixed, .footer-fixed {
+    position: static;
+  }
+}
+

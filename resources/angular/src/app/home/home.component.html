@@ -1,0 +1,63 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="mb-4 search-bar">
+        <form (ngSubmit)="onSearch()">
+          <div class="input-group input-group-lg">
+            <input type="text" [(ngModel)]="isrcCode" name="isrc" class="form-control"
+              placeholder="Busque pela faixa de música inserindo o código ISRC aqui!" required>
+            <button type="submit" class="btn btn-dark">
+              <i class="bi bi-search"></i> Consultar
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- Botões de navegação -->
+      <!-- Botões de navegação -->
+      <div *ngIf="tracks && tracks.length > 1" class="navigation-buttons">
+        <button class="btn btn-outline-secondary" (click)="onPrevious()"
+          [disabled]="currentTrackIndex === 0">Anterior</button>
+        <button class="btn btn-outline-secondary" (click)="onNext()"
+          [disabled]="currentTrackIndex === tracks.length - 1">Próximo</button>
+      </div>
+
+      <!-- Resultado da busca -->
+      <div *ngIf="track" class="mb-3 card card-custom">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img [src]="track.album_thumb" class="img-fluid rounded-start" alt="Album Cover">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ track.track_title }}</h5>
+              <p class="card-text">
+                <small class="text-muted">Lançamento: {{ track.release_date }}</small>
+              </p>
+              <p class="card-text">Artistas: <span *ngFor="let artist of track.artists; let i = index">
+                  {{ artist }}<span *ngIf="i < track.artists.length - 1">, </span>
+                </span></p>
+              <p class="card-text">Duração: {{ track.duration }}</p>
+              <p class="card-text" *ngIf="track.available_in_br">
+                Disponível no Brasil
+              </p>
+              <p class="card-text" *ngIf="!track.available_in_br">
+                Não disponível no Brasil
+              </p>
+              <audio *ngIf="track.preview_url" controls>
+                <source [src]="track.preview_url" type="audio/mpeg">
+                Seu navegador não suporta áudio HTML5.
+              </audio>
+              <a *ngIf="track.spotify_url" href="{{ track.spotify_url }}" class="btn btn-primary" target="_blank">
+                Ouça no Spotify
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Mensagem de erro -->
+      <div *ngIf="errorMessage" class="alert alert-secondary">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
