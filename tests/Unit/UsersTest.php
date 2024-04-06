@@ -169,7 +169,6 @@ class UsersTest extends TestCase
 
         $response = $this->api('POST', 'users', $data)->assertStatus(201)->json('data');
         $this->api('DELETE', 'users/'.$response['uuid'])->assertStatus(200);
-
-        $this->assertNull(User::whereUuid($response['uuid'])->first());
+        $this->api('GET', 'users/'.$response['uuid'])->assertStatus(404);
     }
 }

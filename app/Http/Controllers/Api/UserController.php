@@ -1,15 +1,14 @@
 <?php
-
-namespace App\Http\Controllers\Api\User;
+namespace App\Http\Controllers\Api;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
+
 use App\Services\User\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User\UserJson;
-use App\Http\Requests\UserStoreRequest;
-use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\User\UserRequest;
+use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Resources\User\UsersCollection;
 
 class UserController extends Controller

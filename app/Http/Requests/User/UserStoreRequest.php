@@ -1,11 +1,11 @@
 <?php
+namespace App\Http\Requests\User;
 
-namespace App\Http\Requests;
-
+use App\Models\User;
+use Illuminate\Validation\Rules;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UserUpdateRequest extends FormRequest
+class UserStoreRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,22 +15,18 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|min:3|max:50',
-            'email' => [
-                'sometimes',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('users', 'email')->ignore($this->uuid, 'uuid'),
-            ],
-            'status' => 'sometimes|boolean',
+            'name' => 'required|string|min:3|max:50',
+            'email' => 'required|string|email|max:255|unique:'.User::class,
             'enrollment' => 'sometimes',
-            'company_uuid' => [
-                'sometimes',
-                'uuid',
-                Rule::exists('companies', 'uuid'),
+            'status' => 'required|boolean',
+            'company_uuid' => 'required|uuid',
+            'password' => [
+                'required',
+                'min:6',
+                'max:20',
+                'confirmed',
+                Rules\Password::defaults()
             ],
-            'password' => 'nullable|min:6|max:20|confirmed',
         ];
     }
 
@@ -51,6 +47,7 @@ class UserUpdateRequest extends FormRequest
             'status.boolean' => 'O campo Status deve ser verdadeiro (1) ou falso (0).',
             'company_uuid.required' => 'O campo Empresa é obrigatório.',
             'company_uuid.uuid' => 'O campo Empresa deve ser um UUID válido.',
+            'password.required' => 'O campo Senha é obrigatório.',
             'password.confirmed' => 'A confirmação da senha não corresponde.',
             'password.min' => 'A senha deve ter pelo menos :min caracteres.',
             'password.max' => 'A senha não pode ter mais de :max caracteres.',
