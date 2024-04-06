@@ -1,14 +1,24 @@
 <div class="container mt-5">
-  <div class="row justify-content-center">
+  <!-- Cabeçalho-->
+  <div class="row">
+    <div class="col-12 mb-4">
+      <h1 class="display-4 text-center">Descubra Músicas pelo ISRC</h1>
+      <p class="lead text-center">O ISRC (International Standard Recording Code) é o identificador global padrão para
+        músicas e videoclipes.</p>
+    </div>
+  </div>
+  <div class="row justify-content-center mb-4">
     <div class="col-md-8">
       <div class="mb-4 search-bar">
         <form (ngSubmit)="onSearch()">
           <div class="input-group input-group-lg">
             <input type="text" [(ngModel)]="isrcCode" name="isrc" class="form-control"
               placeholder="Busque pela faixa de música inserindo o código ISRC aqui!" required>
-            <button type="submit" class="btn btn-dark">
-              <i class="bi bi-search"></i> Consultar
-            </button>
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-dark">
+                <i class="bi bi-search"></i> Consultar
+              </button>
+            </div>
           </div>
         </form>
       </div>

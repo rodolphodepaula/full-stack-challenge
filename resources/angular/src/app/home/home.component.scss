@@ -1,7 +1,31 @@
-.card-custom {
+.search-bar {
   background-color: #f8f9fa;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0,0,0,.1);
+
+  input {
+    border: 2px solid #dee2e6;
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+  }
+
+  button {
+    background-color: #272c31;
+    border: none;
+    &:hover {
+      background-color: #272c31;
+    }
+  }
+}
+
+
+.card-custom {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0,0,0,.1);
 
   .card-title {
     color: #333;
@@ -14,6 +38,18 @@
     }
   }
 }
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+
+  .btn {
+    font-size: 1rem;
+    padding: .5rem 1rem;
+  }
+}
+
+
 
 .card-img-top {
   width: 100%;
@@ -28,7 +64,6 @@
 
   .btn {
     width: 100%;
-    margin-top: 10px;
   }
 
   .content {
@@ -39,6 +74,11 @@
 
   .header-fixed, .footer-fixed {
     position: static;
+  }
+}
+@media (max-width: 576px) {
+  .btn {
+    width: 100%;
   }
 }
 

@@ -81,9 +81,14 @@ class User extends Authenticatable
         return $this->status === self::STATUS_ACTIVE;
     }
 
-    public function scopeWhereCompanyIsActive(Builder $query)
+    public function scopeWhereActive(Builder $query): Builder
     {
-        $query->joinUsersHasCompanye()->where('companies.status', true);
+        return $query->whereStatus(self::STATUS_ACTIVE);
+    }
+
+    public function scopeWhereCompanyIsActive(Builder $query): Builder
+    {
+        return $query->joinUsersHasCompanye()->where('companies.status', true);
     }
 
     public function scopeWhereName(Builder $query, string $search = ''): Builder

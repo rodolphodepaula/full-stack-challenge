@@ -1,9 +1,13 @@
 <header class="header">
-  <img src="assets/header-logo.png" alt="ONERpm Logo">
+  <a href="/"><img src="assets/header-logo.png" alt="ONERpm Logo"></a>
   <nav>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-    <a href="/dashboard" *ngIf="isAuthenticated">Dashboard</a>
+    <!-- Somente se não estive autenticado -->
+    <a *ngIf="!(isLoggedIn$ | async)" href="/login">CONECTE-SE</a>
+    <a *ngIf="!(isLoggedIn$ | async)" href="/register">INSCREVA-SE</a>
+
+    <!-- Somente se estive autenticado -->
+    <a *ngIf="isLoggedIn$ | async" href="/admin">Painel</a>
+    <a *ngIf="isLoggedIn$ | async" href="#" (click)="logout()">Log Out</a>
   </nav>
 </header>
 

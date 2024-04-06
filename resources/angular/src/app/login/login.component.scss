@@ -1,0 +1,24 @@
+.login-wrapper {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+.btn-primary {
+  border: none;
+}
+
+.form-control {
+  border-radius: 20px;
+}
+
+.input-error {
+  border: 1px solid red;
+}
+
+/* Ajuste para pequenos dispositivos */
+@media (max-width: 576px) {
+  .login-wrapper {
+    padding: 1rem;
+  }
+}
