@@ -9,6 +9,12 @@ import { AdminComponent } from './admin/admin.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
+import { UsersComponent } from './admin/users/users.component';
+import { CompaniesComponent } from './admin/companies/companies.component';
+import { TracksComponent } from './admin/tracks/tracks.component';
+import { ArtistsComponent } from './admin/artists/artists.component';
+import { AlbumsComponent } from './admin/albums/albums.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +22,14 @@ import { LoginComponent } from './login/login.component';
     XyzComponent,
     HomeComponent,
     AdminComponent,
-    LoginComponent
+    LoginComponent,
+    UsersComponent,
+    CompaniesComponent,
+    TracksComponent,
+    ArtistsComponent,
+    AlbumsComponent,
+    DashboardComponent,
+
   ],
   imports: [
     BrowserModule,

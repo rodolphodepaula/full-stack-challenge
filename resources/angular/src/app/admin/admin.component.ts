@@ -10,6 +10,11 @@ export class AdminComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('sidebarCollapse').addEventListener('click', () => {
+        document.getElementById('sidebar').classList.toggle('active');
+      });
+    });
   }
 
 }

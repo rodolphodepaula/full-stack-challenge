@@ -1,1 +1,20 @@
-<p>admin works!</p>
+<div class="app-container">
+  <div class="sidebar">
+      <div class="sidebar-header">
+          <h3>Painel</h3>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a routerLink="/admin/dashboard" routerLinkActive="active"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a routerLink="/admin/albums" routerLinkActive="active"><i class="fas fa-camera"></i> Álbuns</a></li>
+        <li><a routerLink="/admin/artists" routerLinkActive="active"><i class="fas fa-microphone"></i> Artistas</a></li>
+        <li><a routerLink="/admin/tracks" routerLinkActive="active"><i class="fas fa-music"></i> Faixas</a></li>
+        <li><a routerLink="/admin/companies" routerLinkActive="active"><i class="fas fa-building"></i> Empresas</a></li>
+        <li><a routerLink="/admin/users" routerLinkActive="active"><i class="fas fa-users"></i> Usuários</a></li>
+      </ul>
+  </div>
+  <div class="main-content">
+      <div class="dashboard-content">
+        <router-outlet></router-outlet>
+      </div>
+  </div>
+</div>
