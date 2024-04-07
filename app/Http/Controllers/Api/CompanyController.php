@@ -17,7 +17,8 @@ class CompanyController extends Controller
 
     public function index(CompanyRequest $request): CompanyCollection
     {
-        $filters = $request->validated();
+        $filters =  $request->validated();
+        $filters['search'] = $request->input('search') ?? '';
         $companyQuery = Company::query();
         $companyQuery = $this->srvCompany->getBySearch($companyQuery, $filters);
         $companies = $companyQuery->orderBy('companies.name', 'ASC');

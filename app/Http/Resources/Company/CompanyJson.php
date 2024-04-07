@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Company;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CompanyJson extends JsonResource
@@ -13,8 +14,8 @@ class CompanyJson extends JsonResource
             'name' => $this->name,
             'code' => $this->code,
             'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created_at' => Carbon::parse($this->created_at)->format('d/m/Y H:i'),
+            'updated_at' => Carbon::parse($this->updated_at)->format('d/m/Y H:i'),
         ];
     }
 }

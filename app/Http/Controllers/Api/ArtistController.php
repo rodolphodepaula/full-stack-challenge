@@ -8,14 +8,16 @@ use App\Http\Resources\Artist\ArtistCollection;
 use App\Http\Resources\Artist\ArtistJson;
 use App\Models\Artist;
 use App\Services\Artist\ArtistService;
+use Illuminate\Http\Request;
 
 class ArtistController extends Controller
 {
     public function __construct(private ArtistService $srvArtist){}
 
-    public function index(ArtistRequest $request): ArtistCollection
+    public function index(Request $request): ArtistCollection
     {
-        $filters = $request->validated();
+        $filters =  [];
+        $filters['search'] = $request->input('search') ?? '';
         $artistQuery = Artist::query();
         $artistQuery = $this->srvArtist->getBySearch($artistQuery, $filters);
         $artists = $artistQuery->orderBy('artists.name', 'ASC');

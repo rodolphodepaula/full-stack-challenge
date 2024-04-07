@@ -1,1 +1,184 @@
-<p>albums works!</p>
+<div class="album-management-container">
+  <div class="header">
+    <h1>Gerenciamento de Album</h1>
+  </div>
+
+  <div class="actions">
+    <input type="text" [(ngModel)]="search" name="search" id="search" class="mb-3 form-control search-input"
+      placeholder="Buscar Album...">
+    <button type="button" class="btn btn-secondary" (click)="onLoadAlbums()">
+      Buscar
+    </button>
+  </div>
+
+
+  <div class="mt-3">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" (click)="onOpenModal()">
+      Adicionar
+    </button>
+  </div>
+
+  <div class="table-responsive-sm">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Capa</th>
+          <th scope="col">Título</th>
+          <th scope="col">Empresa</th>
+          <th scope="col">Data de Cadastro</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let album of list">
+          <td>
+            <img *ngIf="album.thumb_path" src="{{ album.thumb_path }}" alt="Capa do álbum" class="img-thumbnail"
+              style="width: 60px; height: auto; cursor: pointer;" (click)="openImageModal(album.thumb_path)" data-toggle="modal" data-target="#imageModal">
+          </td>
+          <td>{{ album.title }}</td>
+          <td>{{ album.company }}</td>
+          <td>{{ album.created_at }}</td>
+          <td>
+            <a data-toggle="modal" data-target="#editModal" class="cursor-pointer" (click)="onEditalbum(album)">
+              <i class="mr-2 far fa-edit"></i>
+            </a>
+            <i class="mr-2 far fa-trash-alt text-danger" data-toggle="modal" data-target="#confirmDeleteModal"
+              (click)="setAlbumForDeletion(album.uuid)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--Modal add-->
+  <div [class.show]="isModalOpen" class="modal fade" id="addModal" tabindex="-1" role="dialog"
+    aria-labelledby="addModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <form method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addModalLabel">Adicionar Usuário</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="title">Nome</label>
+              <input type="text" class="form-control" [(ngModel)]="title"
+                [ngClass]="{'input-error': loginError && !name}" name="title" id="title" placeholder="Digitar o Título"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="thumb_path">URL</label>
+              <input type="thumb_path" class="form-control" [(ngModel)]="thumb_path"
+                [ngClass]="{'input-error': loginError && !thumb_path}" name="thumb_path" id="thumb_path"
+                placeholder="Digitar a URL da capa do album" required>
+            </div>
+            <div class="form-group">
+              <label for="company">Empresa</label>
+              <select class="custom-select" [(ngModel)]="company_uuid"
+                [ngClass]="{'input-error': loginError && !company}" name="company_uuid" id="company_uuid" required>
+                <option selected>Selecione</option>
+                <option *ngFor="let company of companies" [value]="company.uuid">{{ company.name }}</option>
+              </select>
+            </div>
+            <div *ngIf="errorMessage" class="mt-5 alert alert-danger">
+              {{ errorMessage }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)=" onClear()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)=" onSubmit()">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--Modal edit-->
+  <div [class.show]="isModalOpen" class="modal fade" id="editModal" tabindex="-1" role="dialog"
+    aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <form method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Adicionar Usuário</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="title">Nome</label>
+              <input type="text" class="form-control" [(ngModel)]="title"
+                [ngClass]="{'input-error': loginError && !name}" name="title" id="title" placeholder="Digitar o nome"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="thumb_path">URL</label>
+              <input type="thumb_path" class="form-control" [(ngModel)]="thumb_path"
+                [ngClass]="{'input-error': loginError && !thumb_path}" name="thumb_path" id="thumb_path"
+                placeholder="Digitar a URL da capa do album" required>
+            </div>
+            <div class="form-group">
+              <label for="company">Empresa</label>
+              <select class="custom-select" [(ngModel)]="company_uuid" name="company_uuid" required>
+                <option value="" disabled>Selecione</option>
+                <option *ngFor="let company of companies" [value]="company_uuid">{{ company.name }}</option>
+              </select>
+            </div>
+            <div *ngIf="errorMessage" class="mt-5 alert alert-danger">
+              {{ errorMessage }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)=" onClear()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)=" onSubmit()">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal delete -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Tem certeza de que deseja excluir este registro?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="onDelete()">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal para a imagem  -->
+  <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageModalLabel">Visualização da Imagem</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img [src]="selectedImage" class="img-fluid" alt="Imagem expandida">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Paginação aqui -->
+</div>

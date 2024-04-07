@@ -12,11 +12,12 @@ class AlbumService extends AbstractService
 {
     public function getBySearch(Builder $album, array $search = []): Builder
     {
-        if (!empty($search['title']) ?? '') {
-            $album->whereName($search['title']);
+        if (! empty($search['search']) ?? '') {
+            $album->where('albums.title', 'LIKE', '%'.$search['search'].'%');
         }
-        if (!empty($search['thumb_path']) ?? '') {
-            $album->where('thumb_path', $search['thumb_path']);
+
+        if (! empty($search['title']) ?? '') {
+            $album->where('albums.title', 'LIKE', '%'.$search['title'].'%');
         }
 
         return $album;

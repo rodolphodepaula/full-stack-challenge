@@ -10,8 +10,12 @@ class ArtistService extends AbstractService
 {
     public function getBySearch(Builder $artist, array $search = []): Builder
     {
-        if (!empty($search['name']) ?? '') {
-            $artist->whereName($search['name']);
+        if (! empty($search['search']) ?? '') {
+            $artist->where('artists.name', 'LIKE', '%'.$search['search'].'%');
+        }
+
+        if (! empty($search['name']) ?? '') {
+            $artist->where('artists.name', 'LIKE', '%'.$search['name'].'%');
         }
 
         return $artist;

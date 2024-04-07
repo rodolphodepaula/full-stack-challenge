@@ -11,8 +11,12 @@ class CompanyService extends AbstractService
 {
     public function getBySearch(Builder $company, array $search = []): Builder
     {
+        if (! empty($search['search']) ?? '') {
+            $company->where('companies.name', 'LIKE', '%'.$search['search'].'%');
+        }
+
         if (!empty($search['name']) ?? '') {
-            $company->whereName($search['name']);
+            $company->where('companies.name', 'LIKE', '%'.$search['name'].'%');
         }
 
         return $company;

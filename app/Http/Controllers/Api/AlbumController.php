@@ -8,14 +8,16 @@ use App\Http\Requests\Album\AlbumRequest;
 use App\Http\Resources\Album\AlbumCollection;
 use App\Http\Resources\Album\AlbumJson;
 use App\Services\Album\AlbumService;
+use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
     public function __construct(private AlbumService $srvAlbum){}
 
-    public function index(AlbumRequest $request): AlbumCollection
+    public function index(Request $request): AlbumCollection
     {
-        $filters = $request->validated();
+        $filters =  [];
+        $filters['search'] = $request->input('search') ?? '';
         $albumQuery = Album::query();
         $albumQuery = $this->srvAlbum->getBySearch($albumQuery, $filters);
         $albums = $albumQuery->orderBy('albums.title', 'ASC');

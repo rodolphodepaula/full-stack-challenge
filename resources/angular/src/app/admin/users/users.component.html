@@ -10,14 +10,11 @@
       Buscar
     </button>
   </div>
-
-
   <div class="mt-3">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" (click)="onOpenModal()">
       Adicionar
     </button>
   </div>
-
   <div class="table-responsive-sm">
     <table class="table">
       <thead>
@@ -31,7 +28,6 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Dados fictícios para a visualização da tabela -->
         <tr *ngFor="let user of list">
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
@@ -46,7 +42,6 @@
               (click)="setUserForDeletion(user.uuid)"></i>
           </td>
         </tr>
-        <!-- Repetir linhas acima para mais dados fictícios -->
       </tbody>
     </table>
   </div>
@@ -172,5 +167,5 @@
       </div>
     </div>
   </div>
-  <!-- Paginação aqui -->
+  <!-- Add Paginação -->
 </div>

@@ -1,0 +1,40 @@
+.action-icons {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.action-icons.edit {
+  color: #ffc107;
+}
+
+.action-icons.delete {
+  color: #dc3545;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-header-cell {
+  cursor: pointer;
+}
+
+mat-cell {
+
+}
+
+mat-paginator {
+
+}
+
+.input-error {
+  border: 1px solid red;
+}
+
+
+@media (max-width: 768px) {
+  .sidebar, .main-content {
+    width: 100%;
+    padding: 0;
+  }
+}
