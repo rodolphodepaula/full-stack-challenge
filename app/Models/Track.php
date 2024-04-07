@@ -25,6 +25,11 @@ class Track extends Model
         'available_in_brazil'
     ];
 
+    protected $dates = [
+        'created_at',
+        'deleted_at',
+    ];
+
     public function album()
     {
         return $this->belongsTo(Album::class);

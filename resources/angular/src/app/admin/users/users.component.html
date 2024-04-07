@@ -1,2 +1,73 @@
-<p>Gerenciamento de usuários</p>
+<div class="user-management-container">
+  <div class="header">
+    <h1>Gerenciamento de Usuários</h1>
+  </div>
 
+  <div class="actions">
+    <input type="text" class="form-control search-input mb-3" placeholder="Buscar usuários...">
+    <button class="btn btn-add-user" (click)="openDialog()">Adicionar Usuário</button>
+  </div>
+
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Email</th>
+        <th scope="col">Status</th>
+        <th scope="col">Empresa</th>
+        <th scope="col">Data de Cadastro</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Dados fictícios para a visualização da tabela -->
+      <tr>
+        <td>João da Silva</td>
+        <td>joao@example.com</td>
+        <td>Ativo</td>
+        <td>Empresa X</td>
+        <td>01/01/2022</td>
+        <td>
+          <span class="action-icons edit mr-3">&#x270E;</span>
+          <span class="action-icons delete">&#x1F5D1;</span>
+        </td>
+      </tr>
+      <tr>
+        <td>João da Silva</td>
+        <td>joao@example.com</td>
+        <td>Ativo</td>
+        <td>Empresa X</td>
+        <td>01/01/2022</td>
+        <td>
+          <span class="action-icons edit mr-3">&#x270E;</span>
+          <span class="action-icons delete">&#x1F5D1;</span>
+        </td>
+      </tr>
+      <tr>
+        <td>João da Silva</td>
+        <td>joao@example.com</td>
+        <td>Ativo</td>
+        <td>Empresa X</td>
+        <td>01/01/2022</td>
+        <td>
+          <span class="action-icons edit mr-3">&#x270E;</span>
+          <span class="action-icons delete">&#x1F5D1;</span>
+        </td>
+      </tr>
+      <tr>
+        <td>João da Silva</td>
+        <td>joao@example.com</td>
+        <td>Ativo</td>
+        <td>Empresa X</td>
+        <td>01/01/2022</td>
+        <td>
+          <span class="action-icons edit mr-3">&#x270E;</span>
+          <span class="action-icons delete">&#x1F5D1;</span>
+        </td>
+      </tr>
+      <!-- Repetir linhas acima para mais dados fictícios -->
+    </tbody>
+  </table>
+
+  <!-- Paginação aqui -->
+</div>

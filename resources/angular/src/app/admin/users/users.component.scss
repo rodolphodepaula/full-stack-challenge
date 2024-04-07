@@ -1,0 +1,65 @@
+/* Estilos para o título e espaçamento */
+.user-management-container .header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Estilos para o botão Adicionar Usuário */
+.user-management-container .btn-add-user {
+  background-color: #333;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+/* Estilos para a tabela */
+.user-management-container .table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.user-management-container .table tr:hover {
+  background-color: #f2f2f2;
+}
+
+/* Estilos para ícones de ação */
+.action-icons {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.action-icons.edit {
+  color: #ffc107;
+}
+
+.action-icons.delete {
+  color: #dc3545;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-header-cell {
+  cursor: pointer;
+}
+
+mat-cell {
+  // Estilos para as células da tabela
+}
+
+mat-paginator {
+  // Estilos para o paginador
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .sidebar, .main-content {
+    width: 100%;
+    padding: 0;
+  }
+}

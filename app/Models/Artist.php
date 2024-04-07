@@ -17,6 +17,11 @@ class Artist extends Model
 
     protected $fillable = ['name'];
 
+    protected $dates = [
+        'created_at',
+        'deleted_at',
+    ];
+
     public function tracks()
     {
         return $this->belongsToMany(Track::class, 'artist_track');

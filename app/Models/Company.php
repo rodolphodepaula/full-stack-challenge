@@ -30,6 +30,11 @@ class Company extends Model
         'status' => 'bool',
     ];
 
+    protected $dates = [
+        'created_at',
+        'deleted_at',
+    ];
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class);

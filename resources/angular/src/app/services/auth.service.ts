@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastService } from './toast.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,15 @@ export class AuthService {
 
   public get currentUserValue() {
     return this.currentUserSubject.value;
+  }
+
+  getToken(): string | null {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      const user = JSON.parse(currentUser);
+      return user.token;
+    }
+    return null;
   }
 
   login(email: string, password: string) {

@@ -17,6 +17,7 @@ class CreateArtistsTable extends Migration
             $table->id();
             $table->string('uuid', 40)->index();
             $table->string('name');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

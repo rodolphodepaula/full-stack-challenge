@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>{{ editMode ? 'Editar' : 'Adicionar' }} Usuário</h2>
+<mat-dialog-content>
+  <form>
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput placeholder="Digite o nome">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Digite o email">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Status</mat-label>
+      <mat-select>
+        <mat-option value="ativo">Ativo</mat-option>
+        <mat-option value="desativado">Desativado</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Empresa</mat-label>
+      <mat-select>
+        <!-- Opções de empresas vão aqui -->
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button color="primary">Salvar</button>
+</mat-dialog-actions>

@@ -61,6 +61,11 @@ class User extends Authenticatable
         'is_change_password' => 'bool'
     ];
 
+    protected $dates = [
+        'created_at',
+        'deleted_at',
+    ];
+
     public function getEnrollmentAttribute()
     {
         if (empty($this->person)) {

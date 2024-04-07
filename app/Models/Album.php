@@ -21,6 +21,11 @@ class Album extends Model
         'thumb_path'
     ];
 
+    protected $dates = [
+        'created_at',
+        'deleted_at',
+    ];
+
     public function company()
     {
         return $this->belongsTo(Company::class);

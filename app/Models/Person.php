@@ -27,6 +27,11 @@ class Person extends Model
         'image_id',
     ];
 
+    protected $dates = [
+        'created_at',
+        'deleted_at',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
