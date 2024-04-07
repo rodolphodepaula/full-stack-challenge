@@ -17,7 +17,8 @@ class UserController extends Controller
 
     public function index(UserRequest $request): UsersCollection
     {
-        $filters = $request->validated();
+        $filters =  $request->validated();
+        $filters['search'] = $request->input('search') ?? '';
         $usersQuery  = User::query();
         $usersQuery  = $this->srvUser->getBySearch($usersQuery, $filters);
         $users = $usersQuery->whereCompanyIsActive()->orderBy('users.name', 'ASC');

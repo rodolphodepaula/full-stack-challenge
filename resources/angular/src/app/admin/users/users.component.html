@@ -4,70 +4,173 @@
   </div>
 
   <div class="actions">
-    <input type="text" class="form-control search-input mb-3" placeholder="Buscar usuários...">
-    <button class="btn btn-add-user" (click)="openDialog()">Adicionar Usuário</button>
+    <input type="text" [(ngModel)]="search" name="search" id="search" class="mb-3 form-control search-input"
+      placeholder="Buscar usuários...">
+    <button type="button" class="btn btn-secondary" (click)="onLoadUsers()">
+      Buscar
+    </button>
   </div>
 
-  <table class="table table-sm">
-    <thead>
-      <tr>
-        <th scope="col">Nome</th>
-        <th scope="col">Email</th>
-        <th scope="col">Status</th>
-        <th scope="col">Empresa</th>
-        <th scope="col">Data de Cadastro</th>
-        <th scope="col">Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Dados fictícios para a visualização da tabela -->
-      <tr>
-        <td>João da Silva</td>
-        <td>joao@example.com</td>
-        <td>Ativo</td>
-        <td>Empresa X</td>
-        <td>01/01/2022</td>
-        <td>
-          <span class="action-icons edit mr-3">&#x270E;</span>
-          <span class="action-icons delete">&#x1F5D1;</span>
-        </td>
-      </tr>
-      <tr>
-        <td>João da Silva</td>
-        <td>joao@example.com</td>
-        <td>Ativo</td>
-        <td>Empresa X</td>
-        <td>01/01/2022</td>
-        <td>
-          <span class="action-icons edit mr-3">&#x270E;</span>
-          <span class="action-icons delete">&#x1F5D1;</span>
-        </td>
-      </tr>
-      <tr>
-        <td>João da Silva</td>
-        <td>joao@example.com</td>
-        <td>Ativo</td>
-        <td>Empresa X</td>
-        <td>01/01/2022</td>
-        <td>
-          <span class="action-icons edit mr-3">&#x270E;</span>
-          <span class="action-icons delete">&#x1F5D1;</span>
-        </td>
-      </tr>
-      <tr>
-        <td>João da Silva</td>
-        <td>joao@example.com</td>
-        <td>Ativo</td>
-        <td>Empresa X</td>
-        <td>01/01/2022</td>
-        <td>
-          <span class="action-icons edit mr-3">&#x270E;</span>
-          <span class="action-icons delete">&#x1F5D1;</span>
-        </td>
-      </tr>
-      <!-- Repetir linhas acima para mais dados fictícios -->
-    </tbody>
-  </table>
 
+  <div class="mt-3">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" (click)="onOpenModal()">
+      Adicionar
+    </button>
+  </div>
+
+  <div class="table-responsive-sm">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Email</th>
+          <th scope="col">Empresa</th>
+          <th scope="col">Situação</th>
+          <th scope="col">Data de Cadastro</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dados fictícios para a visualização da tabela -->
+        <tr *ngFor="let user of list">
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.company }}</td>
+          <td>{{ user.status ? "Ativado" : "Desativado" }}</td>
+          <td>{{ user.created_at }}</td>
+          <td>
+            <a data-toggle="modal" data-target="#editModal" class="cursor-pointer" (click)="onEditUser(user)">
+              <i class="mr-2 far fa-edit"></i>
+            </a>
+            <i class="mr-2 far fa-trash-alt text-danger" data-toggle="modal" data-target="#confirmDeleteModal"
+              (click)="setUserForDeletion(user.uuid)"></i>
+          </td>
+        </tr>
+        <!-- Repetir linhas acima para mais dados fictícios -->
+      </tbody>
+    </table>
+  </div>
+
+  <!--Modal add-->
+  <div [class.show]="isModalOpen" class="modal fade" id="addModal" tabindex="-1" role="dialog"
+    aria-labelledby="addModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <form method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addModalLabel">Adicionar Usuário</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="name">Nome</label>
+              <input type="text" class="form-control" [(ngModel)]="name"
+                [ngClass]="{'input-error': loginError && !name}" name="name" id="name" placeholder="Digitar o nome"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" class="form-control" [(ngModel)]="email"
+                [ngClass]="{'input-error': loginError && !email}" name="email" id="email" placeholder="Digitar o e-mail"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="company">Empresa</label>
+              <select class="custom-select" [(ngModel)]="company_uuid"
+                [ngClass]="{'input-error': loginError && !company}" name="company_uuid" id="company_uuid" required>
+                <option selected>Selecione</option>
+                <option *ngFor="let company of companies" [value]="company.uuid">{{ company.name }}</option>
+              </select>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="status" name="status" id="status">
+              <label class="form-check-label" for="status">Situação</label>
+            </div>
+            <div *ngIf="errorMessage" class="mt-5 alert alert-danger">
+              {{ errorMessage }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)=" onClear()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)=" onSubmit()">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--Modal edit-->
+  <div [class.show]="isModalOpen" class="modal fade" id="editModal" tabindex="-1" role="dialog"
+    aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <form method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Adicionar Usuário</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="name">Nome</label>
+              <input type="text" class="form-control" [(ngModel)]="name"
+                [ngClass]="{'input-error': loginError && !name}" name="name" id="name" placeholder="Digitar o nome"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" class="form-control" [(ngModel)]="email"
+                [ngClass]="{'input-error': loginError && !email}" name="email" id="email" placeholder="Digitar o e-mail"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="company">Empresa</label>
+              <select class="custom-select" [(ngModel)]="company_uuid" name="company_uuid" required>
+                <option value="" disabled>Selecione</option>
+                <option *ngFor="let company of companies" [value]="company_uuid">{{ company.name }}</option>
+              </select>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="status" name="status" id="status">
+              <label class="form-check-label" for="status">Situação</label>
+            </div>
+            <div *ngIf="errorMessage" class="mt-5 alert alert-danger">
+              {{ errorMessage }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)=" onClear()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)=" onSubmit()">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal delete -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Tem certeza de que deseja excluir este registro?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="onDelete()">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Paginação aqui -->
 </div>

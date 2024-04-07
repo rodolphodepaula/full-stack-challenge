@@ -14,7 +14,6 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string',
-            'company' => 'nulllable|string',
         ];
     }
 }

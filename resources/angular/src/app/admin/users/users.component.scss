@@ -56,6 +56,10 @@ mat-paginator {
   // Estilos para o paginador
 }
 
+.input-error {
+  border: 1px solid red;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .sidebar, .main-content {

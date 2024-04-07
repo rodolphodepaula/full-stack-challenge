@@ -15,8 +15,12 @@ class UserService extends AbstractService
 
     public function getBySearch(Builder $user, array $search = []): Builder
     {
+        if (! empty($search['search']) ?? '') {
+            $user->whereNameOrMail($search['search']);
+        }
+
         if (! empty($search['name']) ?? '') {
-            $user->whereNameOrMail($search['name']);
+            $user->where('users.name', 'LIKE', '%'.$search['name'].'%');
         }
 
         if (! empty($search['email']) ?? '') {
@@ -30,7 +34,8 @@ class UserService extends AbstractService
     {
         return DB::transaction(function () use ($params){
             $email = strtolower(remove_accents(trim($params['email'])));
-            $password = Hash::make($params['password']);
+            $valuePassword = $params['password'] ?? 'password';
+            $password = Hash::make($valuePassword);
             $companyId = Company::whereUuid($params['company_uuid'] ?? '')->value('id');
 
             $user = new User([

@@ -36,8 +36,6 @@ export class LoginComponent implements OnInit {
         },
         error => {
           this.loginError = true;
-          console.error(error);
-
           if (!this.email || !this.password) {
             this.errorMessage = 'Login não realizado. Confira suas credenciais e tente de novo!';
             return;

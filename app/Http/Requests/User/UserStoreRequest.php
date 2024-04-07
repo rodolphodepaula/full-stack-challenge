@@ -21,7 +21,7 @@ class UserStoreRequest extends FormRequest
             'status' => 'required|boolean',
             'company_uuid' => 'required|uuid',
             'password' => [
-                'required',
+                'sometimes',
                 'min:6',
                 'max:20',
                 'confirmed',
@@ -47,7 +47,6 @@ class UserStoreRequest extends FormRequest
             'status.boolean' => 'O campo Status deve ser verdadeiro (1) ou falso (0).',
             'company_uuid.required' => 'O campo Empresa é obrigatório.',
             'company_uuid.uuid' => 'O campo Empresa deve ser um UUID válido.',
-            'password.required' => 'O campo Senha é obrigatório.',
             'password.confirmed' => 'A confirmação da senha não corresponde.',
             'password.min' => 'A senha deve ter pelo menos :min caracteres.',
             'password.max' => 'A senha não pode ter mais de :max caracteres.',

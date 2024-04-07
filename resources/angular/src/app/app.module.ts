@@ -1,6 +1,4 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { XyzComponent } from './xyz/xyz.component';
@@ -21,6 +19,24 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserDialogComponent } from './admin/users/user-dialog/user-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NgModule } from '@angular/core';
+import { MatTableModule } from '@angular/material/table';
+import { HttpClient } from '@angular/common/http';
+import { ApiService } from './services/api.service';
+
+@NgModule({
+  declarations: [
+    // Seus componentes aqui
+  ],
+  imports: [
+    // Outros módulos aqui
+    MatTableModule,
+  ],
+})
+export class SeuModulo { }
+
 
 @NgModule({
   declarations: [
@@ -48,9 +64,14 @@ import { UserDialogComponent } from './admin/users/user-dialog/user-dialog.compo
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
   ],
-  providers: [],
+  providers: [
+    ApiService,
+    HttpClient
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

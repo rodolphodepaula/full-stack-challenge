@@ -13,6 +13,7 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
+  private apiUrl = 'http://localhost/api/';
 
   constructor(
     private http: HttpClient,
@@ -37,7 +38,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<any>('/api/login', { email, password })
+    return this.http.post<any>(this.apiUrl +'login', { email, password })
       .pipe(map(user => {
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
@@ -50,7 +51,7 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     this.toastService.showToast('Você saiu do sistema ONERpm.', 3000);
     this.currentUserSubject.next(null);
-    return this.http.post<any>('/api/logout', {}).pipe(
+    return this.http.post<any>(this.apiUrl + 'logout', {}).pipe(
       tap(() => {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
