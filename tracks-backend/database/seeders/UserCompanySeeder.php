@@ -17,7 +17,7 @@ class UserCompanySeeder extends Seeder
     public function run(): void
     {
         $code = "demo";
-        $companyName = "Empresa ONERpm";
+        $companyName = "ONERpm - Full Stack";
         $userEmailDemo = 'admin@onerpm.com.br';
         $userEmail = 'rodolpho.paula@outlook.com.br';
 

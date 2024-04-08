@@ -18,7 +18,7 @@ class AlbumFactory extends Factory
         return [
             'uuid' => $this->faker->uuid,
             'title' => $this->faker->title,
-            'thumb_path' => $this->faker->imageUrl,
+            'thumb_path' => $this->faker->imageUrl(640, 480, 'music'),
             'company_id' => $company->id,
         ];
     }
