@@ -17,8 +17,9 @@ class CreateTracksTable extends Migration
         Schema::create('tracks', function (Blueprint $table) {
             $table->id();
             $table->string('uuid', 40)->index();
+            $table->unsignedBigInteger('album_id')->nullable();
+            $table->foreign('album_id')->references('id')->on('albums')->onDelete('set null');
             $table->string('isrc')->unique();
-            $table->foreignIdFor(Company::class)->constrained()->onDelete('cascade');
             $table->string('title');
             $table->dateTime('release_date')->nullable();
             $table->string('duration')->nullable();
@@ -37,7 +38,8 @@ class CreateTracksTable extends Migration
     public function down()
     {
         Schema::table('tracks', function (Blueprint $table) {
-            $table->dropForeign(Company::class);
+            $table->dropForeign(['album_id']);
+            $table->dropColumn('album_id');
         });
 
         Schema::dropIfExists('tracks');

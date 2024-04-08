@@ -43,8 +43,7 @@ class TrackController extends Controller
 
     public function show(string $uuid): TrackJson
     {
-        $track = Track::whereUuid($uuid)->with(['album', 'artists'])->firstOrFail();
-
+        $track = Track::whereUuid($uuid)->firstOrFail();
         return new TrackJson($track);
     }
 

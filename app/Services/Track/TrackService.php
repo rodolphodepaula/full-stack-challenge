@@ -7,6 +7,7 @@ use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Track;
 use App\Services\AbstractService;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Http;
 
@@ -45,19 +46,16 @@ class TrackService extends AbstractService
         return $response->json()['tracks']['items'] ?? [];
     }
 
-    public function saveTrack(array $params)
+    public function save(array $params): Track
     {
         return DB::transaction(function () use ($params) {
             $albumId = Album::whereUuid($params['album_uuid'])->value('id');
-            $artistId = Artist::whereUuid($params['artist_uuid'])->value('id');
 
-            if (!$albumId || !$artistId) {
+            if (!$albumId) {
                 throw new \Exception("Álbum ou artista não encontrado.");
             }
-
             $track = new Track([
                 'album_id' => $albumId,
-                'artist_id' => $artistId,
                 'isrc' => $params['isrc'],
                 'title' => $params['title'],
                 'release_date' => $params['release_date'],
@@ -67,6 +65,47 @@ class TrackService extends AbstractService
             ]);
 
             $track->save();
+
+            $artistUuids = is_array($params['artist_uuid']) ? $params['artist_uuid'] : explode(',', $params['artist_uuid']);
+            $artistIds = Artist::whereIn('uuid', $artistUuids)->pluck('id')->toArray();
+            $track->artists()->attach($artistIds);
+
+            return $track;
+        });
+    }
+
+    public function update(Track $track, array $params): Track
+    {
+        return DB::transaction(function () use ($track, $params) {
+            $albumId = Album::whereUuid($params['album_uuid'])->value('id');
+
+            if (!$albumId) {
+                throw new Exception("Álbum não encontrado.");
+            }
+
+            if (!$track) {
+                throw new Exception("Faixa não encontrada.");
+            }
+
+            $track->update([
+                'album_id' => $albumId,
+                'isrc' => $params['isrc'],
+                'title' => $params['title'],
+                'release_date' => $params['release_date'],
+                'duration' => $params['duration'],
+                'spotify_url' => $params['spotify_url'],
+                'available_in_brazil' => $params['available_in_brazil'],
+            ]);
+
+            return $track;
+        });
+    }
+
+    public function delete(Track $track): Track
+    {
+        return DB::transaction(function () use ($track) {
+            $track->artists()->detach();
+            $track->delete();
 
             return $track;
         });
