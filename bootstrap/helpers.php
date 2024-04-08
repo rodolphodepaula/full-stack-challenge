@@ -1,5 +1,0 @@
-<?php
-
-/*
- * Helpers Request.
- */
