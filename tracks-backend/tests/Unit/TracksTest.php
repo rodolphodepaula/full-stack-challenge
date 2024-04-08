@@ -38,7 +38,6 @@ class TracksTest extends TestCase
         $url = $this->faker->url;
         $data = [
             'uuid' => Uuid::uuid4(),
-            'title' => 'Nome da Track',
             'duration' => '3:30',
             'album_uuid' => $album->uuid,
             'spotify_url' => $url,
@@ -60,7 +59,6 @@ class TracksTest extends TestCase
             ->assertStatus(201)
             ->json('data');
 
-        $this->assertEquals($response['title'], 'Nome da Track');
         $this->assertEquals($response['spotify_url'], $url);
         $this->assertFalse($response['available_in_br']);
 
@@ -85,7 +83,7 @@ class TracksTest extends TestCase
 
         $track = Track::factory()->create([
             'album_id' => $album->id,
-            'title' => 'Original Title'
+            'duration' => '03:30'
         ]);
 
 
@@ -93,7 +91,7 @@ class TracksTest extends TestCase
             ->assertStatus(200)
             ->json('data');
 
-        $this->assertEquals('Original Title', $response['title']);
+        $this->assertEquals('03:30', $response['duration']);
 
     }
 
@@ -111,13 +109,11 @@ class TracksTest extends TestCase
 
         $track = Track::factory()->create([
             'album_id' => $album->id,
-            'title' => 'Original Title'
         ]);
 
         $track->artists()->attach($artist->id);
 
         $data = [
-            'title' => 'Updated Title',
             'duration' => '4:30',
             'artist_uuid' => $artist->uuid,
             'album_uuid' => $album->uuid,
@@ -132,7 +128,6 @@ class TracksTest extends TestCase
             ->json('data');
 
         $updatedTrack = Track::find($track->id);
-        $this->assertEquals('Updated Title', $updatedTrack->title);
         $this->assertEquals('4:30', $updatedTrack->duration);
     }
 

@@ -55,7 +55,7 @@ Uma vez armazenados os dados, precisamos exibí-los através de uma webpage púb
 
 * Desenvolver o frontend no Angular 8 ou superior.
 * Desenvolver testes unitários e de integração.
-![Resultado dos Testes Unitários](tracks-backend/storage/assets/test-unitresults.jpg "Resultado dos Testes Unitários")
+![Resultado dos Testes Unitários](test-unitresults.jpg "Resultado dos Testes Unitários")
 
 
 ## O que será avaliado

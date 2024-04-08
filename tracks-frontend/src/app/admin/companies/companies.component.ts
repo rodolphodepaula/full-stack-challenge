@@ -14,6 +14,11 @@ export class CompaniesComponent implements OnInit {
   search: string = "";
   limit: number = 10;
   start: number = 0;
+  currentPage: number = 1;
+  totalPages: number;
+  itemsPerPage: number;
+  totalItems: number;
+  data: any[] = [];
   uuid: string = "";
   name: string = "";
   code: string = "";
@@ -88,14 +93,22 @@ export class CompaniesComponent implements OnInit {
     }
   }
 
-  onLoadCompanies() {
+  onLoadCompanies(page: number = 1) {
     this.list = [];
+    let params = new HttpParams()
+      .set('param', 'search')
+      .set('search', this.search)
+      .set('page', page.toString());
+
     return new Promise(resolve => {
-      const params = new HttpParams().set('search', this.search);
-      this.provider.ApiGet('companies', { params }).subscribe(data => {
+      this.provider.ApiGet('companies', { params: params }).subscribe(data => {
         for (const dado of data['data']) {
           this.list.push(dado);
         }
+        this.currentPage = data['meta']['current_page'];
+        this.totalPages = data['meta']['last_page'];
+        this.itemsPerPage = data['meta']['per_page'];
+        this.totalItems = data['meta']['total'];
         resolve(true);
       })
     });

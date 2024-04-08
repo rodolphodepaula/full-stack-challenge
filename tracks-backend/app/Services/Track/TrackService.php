@@ -15,12 +15,8 @@ class TrackService extends AbstractService
 {
     public function getBySearch(Builder $track, array $search = []): Builder
     {
-        if (!empty($search['search']) ?? '') {
-            $track->whereTitle($search['search']);
-        }
-
-        if (!empty($search['title']) ?? '') {
-            $track->where('tracks.title', 'LIKE', '%' . $search['title'] . '%');
+        if (!empty($search['search'])) {
+            $track = $track->where('albums.title', 'LIKE', '%' . $search['search'] . '%');
         }
 
         if (!empty($search['isrc']) ?? '') {
@@ -54,10 +50,10 @@ class TrackService extends AbstractService
             if (!$albumId) {
                 throw new \Exception("Álbum ou artista não encontrado.");
             }
+
             $track = new Track([
                 'album_id' => $albumId,
                 'isrc' => $params['isrc'],
-                'title' => $params['title'],
                 'release_date' => $params['release_date'],
                 'duration' => $params['duration'],
                 'spotify_url' => $params['spotify_url'],
@@ -66,7 +62,7 @@ class TrackService extends AbstractService
 
             $track->save();
 
-            $artistUuids = is_array($params['artist_uuid']) ? $params['artist_uuid'] : explode(',', $params['artist_uuid']);
+            $artistUuids = is_array($params['artist_uuids']) ? $params['artist_uuids'] : explode(',', $params['artist_uuids']);
             $artistIds = Artist::whereIn('uuid', $artistUuids)->pluck('id')->toArray();
             $track->artists()->attach($artistIds);
 
@@ -90,7 +86,6 @@ class TrackService extends AbstractService
             $track->update([
                 'album_id' => $albumId,
                 'isrc' => $params['isrc'],
-                'title' => $params['title'],
                 'release_date' => $params['release_date'],
                 'duration' => $params['duration'],
                 'spotify_url' => $params['spotify_url'],

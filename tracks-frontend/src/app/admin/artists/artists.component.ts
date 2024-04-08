@@ -14,6 +14,12 @@ export class ArtistsComponent implements OnInit {
   search: string = "";
   limit: number = 10;
   start: number = 0;
+  currentPage: number = 1;
+  totalPages: number;
+  itemsPerPage: number;
+  totalItems: number;
+  data: any[] = [];
+
   uuid: string = "";
   name: string = "";
   errorMessage: string = "";
@@ -81,12 +87,15 @@ export class ArtistsComponent implements OnInit {
     }
   }
 
-  onLoadArtists() {
+  onLoadArtists(page: number = 1) {
     this.list = [];
+    let params = new HttpParams()
+      .set('param', 'search')
+      .set('search', this.search)
+      .set('page', page.toString());
 
     return new Promise(resolve => {
-      const params = new HttpParams().set('search', this.search);
-      this.provider.ApiGet('artists', { params }).subscribe(data => {
+      this.provider.ApiGet('artists', { params: params }).subscribe(data => {
         for (const dado of data['data']) {
           this.list.push(dado);
         }

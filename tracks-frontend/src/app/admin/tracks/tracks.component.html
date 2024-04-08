@@ -1,1 +1,285 @@
-<p>tracks works!</p>
+<div class="track-management-container">
+  <div class="header">
+    <h1>Gerenciamento de Faixas Musicais</h1>
+  </div>
+
+  <div class="actions">
+    <input type="text" [(ngModel)]="search" name="search" id="search" class="mb-3 form-control search-input"
+      placeholder="Buscar Faixa Musical...">
+    <button type="button" class="btn btn-secondary" (click)="onLoadTracks()">
+      Buscar
+    </button>
+  </div>
+  <div class="mt-3">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" (click)="onOpenModal()">
+      Adicionar
+    </button>
+  </div>
+  <div class="mt-3 table-responsive-sm">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Capa</th>
+          <th scope="col">ISRC</th>
+          <th scope="col">Título</th>
+          <th scope="col">Artistas</th>
+          <th scope="col">Duração</th>
+          <th scope="col">Ouvir</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let track of list; let i = index">
+          <td>
+            <img *ngIf="track.album_thumb" src="{{ track.album_thumb }}" alt="Capa do álbum" class="img-thumbnail"
+              style="width: 60px; height: auto; cursor: pointer;" (click)="openImageModal(track.album_thumb)"
+              data-toggle="modal" data-target="#imageModal">
+          </td>
+          <td>{{ track.isrc }}</td>
+          <td>{{ track.album_title }}</td>
+          <td>{{ track.artists ? formatArtists(track.artists) : 'Nenhum artista' }}</td>
+          <td>{{ track.duration }}</td>
+          <td>
+            <button *ngIf="track.preview_url" (click)="playPreview(track.preview_url)"
+              class="btn btn-sm btn-outline-secondary">
+              <i class="fa fa-play"></i>
+            </button>
+          </td>
+          <td>
+            <i class="mr-2 far fa-edit" data-toggle="modal" data-target="#editModal" (click)="onEditTrack(track)"></i>
+            <i class="mr-2 far fa-trash-alt text-danger" data-toggle="modal" data-target="#confirmDeleteModal"
+              (click)="setTrackForDeletion(track.uuid)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--Modal add-->
+  <div [class.show]="isModalOpen" class="modal fade" id="addModal" tabindex="-1" role="dialog"
+    aria-labelledby="addModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <form method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addModalLabel">Adicionar Faixa Musical</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- ISRC -->
+            <div class="form-group">
+              <label for="isrc">ISRC</label>
+              <input type="text" class="form-control" [ngClass]="{'input-error': loginError && !isrc}" id="isrc"
+                [(ngModel)]="this.isrc" name="isrc" required>
+            </div>
+            <!-- Álbum -->
+            <div class="form-group">
+              <label for="album_uuid">Álbum</label>
+              <select class="form-control" id="album_uuid" [(ngModel)]="this.album_uuid"
+                [ngClass]="{'input-error': loginError && !album_uuid}" name="album_uuid" required>
+                <option *ngFor="let album of this.albumList" [value]="album.uuid">{{ album.title }}</option>
+              </select>
+            </div>
+            <!-- Artistas -->
+            <div class="form-group">
+              <label for="artist_uuid">Artistas</label>
+              <select multiple class="form-control" id="artist_uuid" [(ngModel)]="this.selectedArtistUuids"
+                name="artist_uuid">
+                <option *ngFor="let artist of artistList" [value]="artist.uuid">{{ artist.name }}</option>
+              </select>
+            </div>
+            <!-- Duração -->
+            <div class="form-group">
+              <label for="duration">Duração</label>
+              <input type="text" class="form-control" id="duration" [(ngModel)]="this.duration"
+                [ngClass]="{'input-error': loginError && !this.duration}" name="duration"
+                pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" placeholder="hh:mm:ss" title="Insira a duração no formato HH:MM:SS"
+                required>
+            </div>
+            <!-- disponível no Brasil -->
+            <div class="form-group custom-checkbox">
+              <input type="checkbox" id="available_in_brazil" [(ngModel)]="this.available_in_brazil"
+                name="available_in_brazil" />
+              <label for="available_in_brazil">Disponível no Brasil</label>
+            </div>
+
+            <!-- data de lançamento -->
+            <div class="form-group">
+              <label for="releaseDate">Data de Lançamento</label>
+              <input type="date" id="releaseDate" class="form-control" [(ngModel)]="this.release_date"
+                name="release_date" />
+            </div>
+
+            <!-- Spotify URL -->
+            <div class="form-group">
+              <label for="spotifyUrl">URL do Spotify</label>
+              <input type="url" id="spotifyUrl" class="form-control" [(ngModel)]="this.spotify_url" name="spotify_url"
+                [ngClass]="{'input-error': loginError && !spotify_url}" required />
+            </div>
+
+            <!-- Preview URL -->
+            <div class="form-group">
+              <label for="previewUrl">URL de Preview da Música</label>
+              <input type="url" id="previewUrl" class="form-control" [(ngModel)]="this.preview_url"
+                name="preview_url" />
+            </div>
+            <div *ngIf="errorMessage" class="mt-5 alert alert-danger">
+              {{ errorMessage }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)=" onClear()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)=" onSubmit()">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--Modal edit-->
+  <div [class.show]="isModalOpen" class="modal fade" id="editModal" tabindex="-1" role="dialog"
+    aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <form method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Editar Faixa Musical</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- ISRC -->
+            <div class="form-group">
+              <label for="isrc">ISRC</label>
+              <input type="text" class="form-control" [ngClass]="{'input-error': loginError && !isrc}" id="isrc"
+                [(ngModel)]="this.isrc" name="isrc" required>
+            </div>
+            <!-- Álbum -->
+            <div class="form-group">
+              <label for="album_uuid">Álbum</label>
+              <select class="form-control" id="album_uuid" [(ngModel)]="this.album_uuid"
+                [ngClass]="{'input-error': loginError && !album_uuid}" name="album_uuid" required>
+                <option *ngFor="let album of this.albumList" [value]="album.uuid">{{ album.title }}</option>
+              </select>
+            </div>
+            <!-- Artistas -->
+            <div class="form-group">
+              <label for="artist_uuid">Artistas</label>
+              <select multiple class="form-control" id="artist_uuids" [(ngModel)]="selectedArtistUuids" [ngClass]="{'input-error': loginError && !artist_uuids}" name="artist_uuids" required>
+                <option *ngFor="let artist of artistList" [value]="artist.uuid" [selected]="selectedArtistUuids.includes(artist.uuid)">
+                  {{ artist.name }}
+                </option>
+              </select>
+
+            </div>
+            <!-- Duração -->
+            <div class="form-group">
+              <label for="duration">Duração</label>
+              <input type="text" class="form-control" id="duration" [(ngModel)]="this.duration"
+                [ngClass]="{'input-error': loginError && !this.duration}" name="duration"
+                pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" placeholder="hh:mm:ss" title="Insira a duração no formato HH:MM:SS"
+                required>
+            </div>
+            <!-- disponível no Brasil -->
+            <div class="form-group custom-checkbox">
+              <input type="checkbox" id="available_in_brazil" [(ngModel)]="this.available_in_brazil"
+                name="available_in_brazil" />
+              <label for="available_in_brazil">Disponível no Brasil</label>
+            </div>
+
+            <!-- data de lançamento -->
+            <div class="form-group">
+              <label for="releaseDate">Data de Lançamento</label>
+              <input type="date" id="releaseDate" class="form-control" [(ngModel)]="this.release_date"
+                name="release_date" />
+            </div>
+
+            <!-- Spotify URL -->
+            <div class="form-group">
+              <label for="spotifyUrl">URL do Spotify</label>
+              <input type="url" id="spotifyUrl" class="form-control" [(ngModel)]="this.spotify_url" name="spotify_url"
+                [ngClass]="{'input-error': loginError && !spotify_url}" required />
+            </div>
+
+            <!-- Preview URL -->
+            <div class="form-group">
+              <label for="previewUrl">URL de Preview da Música</label>
+              <input type="url" id="previewUrl" class="form-control" [(ngModel)]="this.preview_url"
+                name="preview_url" />
+            </div>
+            <div *ngIf="errorMessage" class="mt-5 alert alert-danger">
+              {{ errorMessage }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)=" onClear()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)=" onSubmit()">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal delete -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Tem certeza de que deseja excluir este registro?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="onDelete()">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal para a imagem  -->
+  <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageModalLabel">Visualização da Imagem</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img [src]="selectedImage" class="img-fluid" alt="Imagem expandida">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add Paginação -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" href="#" (click)="$event.preventDefault(); onLoadTracks(currentPage - 1)"
+          aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+        [class.active]="currentPage === i+1">
+        <a class="page-link" href="#" (click)="$event.preventDefault(); onLoadTracks(i+1)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" href="#" (click)="$event.preventDefault(); onLoadTracks(currentPage + 1)"
+          aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+</div>

@@ -20,10 +20,10 @@ class CreateTracksTable extends Migration
             $table->unsignedBigInteger('album_id')->nullable();
             $table->foreign('album_id')->references('id')->on('albums')->onDelete('set null');
             $table->string('isrc')->unique();
-            $table->string('title');
             $table->dateTime('release_date')->nullable();
             $table->string('duration')->nullable();
             $table->string('spotify_url')->nullable();
+            $table->string('preview_url')->nullable();
             $table->boolean('available_in_brazil');
             $table->softDeletes();
             $table->timestamps();

@@ -10,7 +10,7 @@ class TrackCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->collection->map(function ($item) {
-            return new ApiTrackJson($item);
+            return new TrackJson($item);
         });
     }
 }

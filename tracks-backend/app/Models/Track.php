@@ -18,10 +18,10 @@ class Track extends Model
     protected $fillable = [
         'album_id',
         'isrc',
-        'title',
         'release_date',
         'duration',
         'spotify_url',
+        'preview_url',
         'available_in_brazil'
     ];
 

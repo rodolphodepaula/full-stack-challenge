@@ -16,7 +16,7 @@
     </button>
   </div>
 
-  <div class="table-responsive-sm">
+  <div class="mt-3 table-responsive-sm">
     <table class="table">
       <thead>
         <tr>
@@ -48,7 +48,7 @@
       <form method="post">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addModalLabel">Adicionar Usuário</h5>
+            <h5 class="modal-title" id="addModalLabel">Adicionar Artista</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -80,7 +80,7 @@
       <form method="post">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="editModalLabel">Adicionar Usuário</h5>
+            <h5 class="modal-title" id="editModalLabel">Editar Artista</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -127,5 +127,22 @@
       </div>
     </div>
   </div>
-  <!-- Add Paginação -->
+   <!-- Add Paginação -->
+   <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" href="#" (click)="$event.preventDefault(); onLoadArtists(currentPage - 1)" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="currentPage === i+1">
+        <a class="page-link" href="#" (click)="$event.preventDefault(); onLoadArtists(i+1)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" href="#" (click)="$event.preventDefault(); onLoadArtists(currentPage + 1)" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </div>

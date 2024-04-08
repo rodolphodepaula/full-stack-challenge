@@ -28,7 +28,9 @@ class TrackController extends Controller
         $filters['search'] = $request->input('search') ?? '';
         $tracksQuery  = Track::query();
         $tracksQuery  = $this->svcTrack->getBySearch($tracksQuery, $filters);
-        $tracks = $tracksQuery->whereCompanyIsActive()->orderBy('tracks.name', 'ASC');
+        $tracks = $tracksQuery->join('albums', 'tracks.album_id', '=', 'albums.id')
+            ->select('tracks.*')
+            ->orderBy('albums.title', 'ASC');
         $perPage = $request->input('per_page', 10);
 
         return new TrackCollection($tracks->paginate($perPage));
@@ -49,7 +51,8 @@ class TrackController extends Controller
 
     public function update(TrackRequest $request, string $uuid): TrackJson
     {
-        $track = Track::whereUuid($uuid)->firstOrFail();
+
+        $track = Track::where('uuid', $uuid)->first();
         $track = $this->svcTrack->update($track, $request->validated());
 
         return new TrackJson($track);
