@@ -25,6 +25,7 @@ import { NgModule } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from './services/api.service';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ export class SeuModulo { }
     AlbumsComponent,
     DashboardComponent,
     UserDialogComponent,
+    SignupComponent,
 
   ],
   imports: [

@@ -10,11 +10,13 @@ import { TracksComponent } from './admin/tracks/tracks.component';
 import { ArtistsComponent } from './admin/artists/artists.component';
 import { AlbumsComponent } from './admin/albums/albums.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { SignupComponent } from './signup/signup.component';
 
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
   {path:'login', component: LoginComponent},
+  {path:'signup', component: SignupComponent},
   {
     path:'admin',
     component: AdminComponent,

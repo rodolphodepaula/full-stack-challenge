@@ -27,6 +27,15 @@ class CompanyController extends Controller
         return new CompanyCollection($companies->paginate($perPage));
     }
 
+    public function list(): CompanyCollection
+    {
+        $companyQuery = Company::query();
+        $companyQuery = $this->srvCompany->getBySearch($companyQuery, []);
+        $companies = $companyQuery->orderBy('companies.name', 'ASC');
+
+        return new CompanyCollection($companies->get());
+    }
+
     public function store(CompanyStoreRequest $request): CompanyJson
     {
         $company = $this->srvCompany->save($request->validated());

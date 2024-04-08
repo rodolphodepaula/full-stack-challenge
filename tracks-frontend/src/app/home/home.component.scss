@@ -2,12 +2,12 @@
   background-color: #f8f9fa;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0,0,0,.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   input {
     border: 2px solid #dee2e6;
     &:focus {
-      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
   }
 
@@ -20,12 +20,11 @@
   }
 }
 
-
 .card-custom {
   background-color: #ffffff;
   border: none;
   border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0,0,0,.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   .card-title {
     color: #333;
@@ -45,21 +44,42 @@
 
   .btn {
     font-size: 1rem;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
   }
 }
-
-
 
 .card-img-top {
   width: 100%;
   height: auto;
 }
 
+.btn-add-to-db {
+  background-color: #4caf50; /* Cor de fundo verde para destacar */
+  color: white; /* Texto branco para contraste */
+  font-weight: bold; /* Texto em negrito para chamar a atenção */
+  margin-top: 10px; /* Espaço acima do botão */
+  border-radius: 5px; /* Bordas levemente arredondadas para um look moderno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para profundidade */
+  transition: background-color 0.3s, transform 0.3s; /* Transição suave para efeitos de hover */
+}
+
+.btn-add-to-db:hover,
+.btn-add-to-db:focus {
+  background-color: #45a049; /* Cor mais escura no hover para feedback */
+  transform: translateY(
+    -2px
+  ); /* Levanta ligeiramente o botão para um efeito dinâmico */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra maior para destaque */
+}
+
 @media (max-width: 768px) {
   .card-img-top {
     height: 200px;
     object-fit: cover;
+  }
+
+  .btn-add-to-db {
+    font-size: smaller; /* Tamanho de fonte menor para dispositivos menores */
   }
 
   .btn {
@@ -72,7 +92,8 @@
     overflow-y: scroll;
   }
 
-  .header-fixed, .footer-fixed {
+  .header-fixed,
+  .footer-fixed {
     position: static;
   }
 }
@@ -81,4 +102,3 @@
     width: 100%;
   }
 }
-

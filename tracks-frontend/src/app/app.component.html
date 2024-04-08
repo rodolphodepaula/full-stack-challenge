@@ -5,7 +5,7 @@
     <a *ngIf="!(isLoggedIn$ | async)" href="/login">CONECTE-SE</a>
 
     <!--Implementação futura-->
-    <!-- <a *ngIf="!(isLoggedIn$ | async)" href="/register">INSCREVA-SE</a> -->
+    <a *ngIf="!(isLoggedIn$ | async)" href="/signup">INSCREVA-SE</a>
 
     <!-- Somente se estive autenticado -->
     <a *ngIf="isLoggedIn$ | async" href="/admin">Painel</a>

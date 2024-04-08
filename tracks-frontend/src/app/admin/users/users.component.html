@@ -75,7 +75,7 @@
             <div class="form-group">
               <label for="company">Empresa</label>
               <select class="custom-select" [(ngModel)]="company_uuid"
-                [ngClass]="{'input-error': loginError && !company}" name="company_uuid" id="company_uuid" required>
+                [ngClass]="{'input-error': loginError && !company_uuid}" name="company_uuid" id="company_uuid" required>
                 <option selected>Selecione</option>
                 <option *ngFor="let company of companies" [value]="company.uuid">{{ company.name }}</option>
               </select>

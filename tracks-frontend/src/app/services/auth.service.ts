@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<any>(this.apiUrl +'login', { email, password })
+    return this.http.post<any>(this.apiUrl + 'login', { email, password })
       .pipe(map(user => {
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
@@ -58,6 +58,22 @@ export class AuthService {
       })
     );
   }
+
+  singup(name: string, email: string, password: string, passwordConfirm: string, company_uuid: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}singup`, {
+      name,
+      email,
+      password,
+      password_confirmation: passwordConfirm,
+      company_uuid: company_uuid
+    })
+    .pipe(map(user => {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      this.currentUserSubject.next(user);
+      return user;
+    }));
+  }
+
 
   public isLoggedIn(): Observable<boolean> {
     return this.currentUserSubject.asObservable().pipe(map(user => {
