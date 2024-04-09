@@ -1,0 +1,44 @@
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.img-fluid {
+  max-height: 300px;
+  margin-bottom: 20px;
+}
+
+.display-4 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.btn-primary, .btn-success {
+  margin-right: 10px;
+}
+
+audio {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.track-details-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.btn-secondary, .btn-success {
+  margin-right: 10px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.audio-player {
+  width: 100%;
+  margin-top: 20px;
+}

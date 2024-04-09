@@ -26,16 +26,9 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { SignupComponent } from './signup/signup.component';
+import { TrackDetailsComponent } from './track-details/track-details.component';
 
-@NgModule({
-  declarations: [
-    // Seus componentes aqui
-  ],
-  imports: [
-    // Outros módulos aqui
-    MatTableModule,
-  ],
-})
+
 export class SeuModulo { }
 
 
@@ -54,6 +47,7 @@ export class SeuModulo { }
     DashboardComponent,
     UserDialogComponent,
     SignupComponent,
+    TrackDetailsComponent
 
   ],
   imports: [
@@ -69,6 +63,7 @@ export class SeuModulo { }
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
+    MatTableModule,
   ],
   providers: [
     ApiService,

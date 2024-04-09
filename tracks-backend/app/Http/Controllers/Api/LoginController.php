@@ -28,7 +28,10 @@ class LoginController extends Controller
 
         $token = $user->createToken('authOnerpmToken')->plainTextToken;
 
-        return response()->json(['token' => $token], 200);
+        return response()->json([
+            'token' => $token,
+            'company_uuid' => $user->company->uuid
+        ], 200);
     }
 
     public function singup(Request $request): JsonResponse
@@ -50,7 +53,10 @@ class LoginController extends Controller
 
         $token = $user->createToken('authOnerpmToken')->plainTextToken;
 
-        return response()->json(['token' => $token], 200);
+        return response()->json([
+            'token' => $token,
+            'company_uuid' => $user->company->uuid
+        ], 200);
 
     }
 

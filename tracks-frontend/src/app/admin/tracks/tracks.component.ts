@@ -128,7 +128,7 @@ export class TracksComponent implements OnInit {
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             this.router.navigate(['/admin/tracks']);
           });
-          this.toastService.showToast('Usuário excluído com sucesso.', 3000);
+          this.toastService.showToast('Faixa musical excluído com sucesso.', 3000);
         },
         error => {
           this.toastService.showToast('Houve um erro ao excluir o usuário.', 3000);
@@ -218,7 +218,7 @@ export class TracksComponent implements OnInit {
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
               this.router.navigate(['/admin/tracks']);
             });
-            this.toastService.showToast('Usuário salvo com sucesso.', 3000);
+            this.toastService.showToast('Faixa musical salvo com sucesso.', 3000);
           },
           error => {
             this.loginError = true;

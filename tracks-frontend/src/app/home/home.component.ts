@@ -3,6 +3,7 @@ import { TrackService } from '../services/track.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,8 @@ export class HomeComponent implements OnInit {
 
   constructor(private trackService: TrackService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -75,7 +77,9 @@ export class HomeComponent implements OnInit {
   {
     this.isLoggedIn$.subscribe(isLoggedIn => {
       if (isLoggedIn) {
-        // Lógica para adicionar à biblioteca...
+        localStorage.setItem('track', JSON.stringify(track));
+        localStorage.setItem('isrc', this.isrcCode);
+        this.router.navigate(['/track-details']);
       } else {
         this.router.navigate(['/signup']);
       }

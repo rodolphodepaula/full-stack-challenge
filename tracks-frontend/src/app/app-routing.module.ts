@@ -11,12 +11,14 @@ import { ArtistsComponent } from './admin/artists/artists.component';
 import { AlbumsComponent } from './admin/albums/albums.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { SignupComponent } from './signup/signup.component';
+import { TrackDetailsComponent } from './track-details/track-details.component';
 
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
   {path:'login', component: LoginComponent},
   {path:'signup', component: SignupComponent},
+  {path:'track-details', component: TrackDetailsComponent, canActivate: [AuthGuard]},
   {
     path:'admin',
     component: AdminComponent,
