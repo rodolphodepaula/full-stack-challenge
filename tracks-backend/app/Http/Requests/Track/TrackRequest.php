@@ -42,7 +42,7 @@ class TrackRequest  extends FormRequest
             'duration.required' => 'A duração da faixa é obrigatória.',
             'duration.string' => 'A duração da faixa deve ser uma string.',
             'spotify_url.url' => 'A URL do Spotify deve ser um URL válido.',
-            'preview_url.url' => 'A URL do Spotify deve ser um URL válido.',
+            'preview_url.url' => 'A URL do Preview da Música deve ser um URL válido.',
             'available_in_brazil.required' => 'É obrigatório informar se a faixa está disponível no Brasil.',
             'available_in_brazil.boolean' => 'O campo disponível no Brasil deve ser verdadeiro ou falso.',
         ];
