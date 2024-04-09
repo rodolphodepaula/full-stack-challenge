@@ -57,6 +57,7 @@ class TrackService extends AbstractService
                 'release_date' => $params['release_date'],
                 'duration' => $params['duration'],
                 'spotify_url' => $params['spotify_url'],
+                'preview_url' => $params['preview_url'],
                 'available_in_brazil' => $params['available_in_brazil'],
             ]);
 
@@ -89,6 +90,7 @@ class TrackService extends AbstractService
                 'release_date' => $params['release_date'],
                 'duration' => $params['duration'],
                 'spotify_url' => $params['spotify_url'],
+                'preview_url' => $params['preview_url'],
                 'available_in_brazil' => $params['available_in_brazil'],
             ]);
 
