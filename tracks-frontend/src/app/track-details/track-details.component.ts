@@ -101,7 +101,7 @@ export class TrackDetailsComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.provider.ApiPost(artist, 'artists', true)
         .subscribe(
-          data => resolve(data.data.uuid),
+          data => resolve((data as any).data.uuid),
           error => reject(error)
         );
     });
@@ -119,7 +119,7 @@ export class TrackDetailsComponent implements OnInit {
 
       this.provider.ApiPost(album, 'albums', true)
         .subscribe(
-          data => resolve(data.data.uuid),
+          data => resolve((data as any).data.uuid),
           error => reject(error)
         );
     });

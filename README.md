@@ -1,76 +1,55 @@
-## Início
+# Descubra Músicas pelo ISRC com Laravel e Angular
 
-Bem vindo ao mundo da música!
+Bem-vindo ao projeto Laravel! Este projeto utiliza Laravel 8 com Angular 8 para criar uma aplicação web poderosa.
 
-Atualmente temos a necessidade de consumir os dados de faixas musicais através do código ISRC, que é uma das coisas mais importantes na indústria fonográfica.
-
-Segundo [Abramus](https://www.abramus.org.br/musica/isrc/), ISRC (International Standard Recording Code ou Código de Gravação Padrão Internacional) é um padrão internacional de código para identificar de forma única as gravações (faixas).
-
-Ele funciona como um código de barras da faixa.
-
-
-## Problema
-
-Durante o fechamento de contrato com um produtor, foram informados 10 ISRC's que não constam em nossas bases de dados, que seguem abaixo:
-
-* US7VG1846811
-* US7QQ1846811
-* BRC310600002
-* BR1SP1200071
-* BR1SP1200070
-* BR1SP1500002
-* BXKZM1900338
-* BXKZM1900345
-* QZNJX2081700
-* QZNJX2078148
-
-Precisamos obter e exibir os seguintes dados:
-
-* Thumb do álbum
-* Data de lançamento
-* Título da faixa
-* Lista dos artistas da faixa
-* Duração da faixa em minutos e segundos (mm:ss)
-* Player com prévia do áudio
-* Link para a página da faixa no Spotify
-* Sinalização dizendo se a faixa está ou não disponível no Brasil (BR)
-
-Por decisão técnica, temos a necessidade de guardar estas informações em um banco de dados. Para isso, fique livre para criar a estrutura necessária para guardar as informações que achar pertinente das faixas.
-
-- [Relacionamentos dos Modelos](MODEL_RELATIONSHIPS.md)
-
-Uma vez armazenados os dados, precisamos exibí-los através de uma webpage pública, ordenados por título da faixa de forma alfabética.
-
+![Aplicação](screem-app-search.jpg)
 
 ## Requisitos
 
-* Faça um fork deste repositório e abra um PR quando estiver finalizado.
-* O backend deve ser feito no framework Laravel 7.0 ou superior.
-* O banco de dados deve ser MySQL.
-* A página deve ser responsiva para atender todos os tipos de dispositivos.
-* Use a API do Spotify: [https://developer.spotify.com/](https://developer.spotify.com/) para coletar os dados das faixas.
+- PHP >= 8.2.12
+- Docker e Docker Compose
+- Node.js >= v16.20.2
+- NPM >= 8.19.4
+- Composer
+
+## Configuração Inicial
+
+### Clonando o Repositório
+
+Clone o repositório para sua máquina local:
 
 
-## Diferencial
+## Docker Sail
+Este projeto utiliza o Docker Sail para simplificar o ambiente de desenvolvimento. Você pode iniciar o ambiente Docker Sail com o seguinte comando:
+./vendor/bin/sail up
 
-* Desenvolver o frontend no Angular 8 ou superior.
-* Desenvolver testes unitários e de integração.
-![Resultado dos Testes Unitários](test-unitresults.jpg "Resultado dos Testes Unitários")
+## Instalação de Dependências
+Depois de iniciar o ambiente Sail, você precisa instalar as dependências do PHP e do Node.js. Use os seguintes comandos:
+
+- composer install - (Diretório tracks-backend)
+- npm install - (Diretório tracks-frontend)
+
+## Configuração do Banco de Dados
+Crie um arquivo .env com base no arquivo .env.example e configure suas credenciais de banco de dados.
+- cp .env.example .env
+
+Em seguida, gere uma chave de aplicativo: (Diretório tracks-backend)
+- sail php artisan key:generate
+
+E execute as migrações do banco de dados: (Diretório tracks-backend):
+- sail php artisan migrate --seed
+
+## Rodando o Projeto (Diretório tracks-frontend):
+Após a configuração inicial, você pode iniciar o servidor de desenvolvimento com o seguinte comando:
+- ng serve
+
+acesse o aplicativo em seu navegador em http://localhost.
+
+### Credenciais de Acesso
+
+Um usuário de teste foi criado durante a execução do seeder `UserCompanySeeder`.
 
 
-## O que será avaliado
-
-* Fidelidade às instruções.
-* Padrões de projeto.
-* Clean Code e boas práticas.
-* Boas práticas de versionamento.
 
 
-## Perfil que buscamos
 
-* Comunicativo
-* Autodidata
-* Automotivado
-* Curioso
-* Gostar de trabalhar em equipe
-* Compromissado
